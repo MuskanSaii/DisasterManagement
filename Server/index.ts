@@ -5,8 +5,11 @@ import { ConnectDb } from './db/ConnectDb';
 import authRoutes from "./routes/auth";
 import hashtag from './routes/hashtag';
 import geoLocation from './routes/geoLocation';
-import imageRecongnize from './routes/imageRecongnize';
+import {imageRecongnizeHandler} from './controllers/imageRecognizeController';
 import cors from 'cors';
+import multer from 'multer';
+import ImageHandle from './routes/iamgGet';
+const upload = multer({dest:'./uploads'})
 const app = express();
 app.use(cors())
 
@@ -24,8 +27,8 @@ ConnectDb();
 app.use("/auth", authRoutes);
 app.use('/hashtag',hashtag);
 app.use('/geoLocation',geoLocation);
-app.use('/image-recognize',imageRecongnize);
-
+app.use('/image-recognize', upload.single('file'),imageRecongnizeHandler);
+app.use('/get-image',ImageHandle);
 app.listen(PORT, () => {
   console.log(`Http server is listening on the port ${PORT}`);
 });
