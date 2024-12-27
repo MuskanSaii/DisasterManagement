@@ -8,7 +8,7 @@ WORKDIR /usr/src/app
 COPY package*.json ./
 
 # Copy node_modules from the host machine to the container
-COPY node_modules ./node_modules
+RUN npm install --force
 
 # Copy the rest of the application code
 COPY . .
